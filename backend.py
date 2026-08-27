@@ -226,4 +226,8 @@ def admin_uncovered_topics():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    # En local (votre PC), Render ne fournit pas de variable PORT : on retombe alors sur 5000.
+    # En ligne (Render, ou tout hebergement similaire), on doit ecouter sur 0.0.0.0 et sur le
+    # port impose par la plateforme, sinon le service n'est jamais detecte comme actif.
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
